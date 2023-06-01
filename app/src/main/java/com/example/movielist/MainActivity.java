@@ -5,6 +5,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +26,14 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         CustomAdapter customAdapter = new CustomAdapter(titles, images);
+        customAdapter.setOnItemClickListner(new CustomAdapter.OnItemclickListner() {
+            @Override
+            public void onItemClickListner(View v, int pos) {
+                Toast.makeText(getApplicationContext(),"위치:["+ pos +"], 영화:["+ titles[pos] +"] 선택",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
         recyclerView.setAdapter(customAdapter);
 
-           }
+    }
 }

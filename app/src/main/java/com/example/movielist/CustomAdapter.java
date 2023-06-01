@@ -14,11 +14,20 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     private String[] localTitles;
     private int[] localImages;
 
+    public interface OnItemclickListner {
+        void onItemClickListner(View v, int pos);
+    }
+
+    private OnItemclickListner itemclickListner;
+    public void setOnItemClickListner(OnItemclickListner lis) {
+        itemclickListner = lis;
+    }
+
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder)
      */
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         //private final TextView textView;
         private final ImageView imageView;
         private final TextView tvTitle;
@@ -35,7 +44,17 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             tvGenre = view.findViewById(R.id.tvGenre);
             tvRating = view.findViewById(R.id.tvRating);
             tvYear = view.findViewById(R.id.tvYear);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int pos = getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION)
+                        itemclickListner.onItemClickListner(view, pos);
+                }
+            });
         }
+
 
         public ImageView getImageView() {
             return imageView;
